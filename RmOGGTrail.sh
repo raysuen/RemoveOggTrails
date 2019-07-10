@@ -1,6 +1,6 @@
 #!/bin/bash
 #by raysuen
-#v01
+#v02
 
 
 ComGgsci=/u01/ggs/ggsci         #指定ggsci的绝对路径
@@ -147,7 +147,8 @@ deleteReplicatfile(){
 		#获取当前复制进程的trail文件的前置名称
 		replicatFilePre=`echo $i | awk -F ',' '{print $2}' | awk -F '/' -v prefile="" '{for(i=1;i<=NF;i++) {if(i==1){continue} else if(i==NF) {prefile=prefile"/"substr($i,1,2)} else {prefile=prefile"/"$i}}}END{print prefile}' | sed 's#\./dirdat#'"${ExtractTrailDir}"'#g'`
 		#获取当前进程正在读取的trail文件的seq号
-		replicatSeq=`echo $i | awk -F ',' '{print $2}' | awk -F ''"${replicatFilePre}"'' '{print $NF}' | sed 's#0##g'`
+		#replicatSeq=`echo $i | awk -F ',' '{print $2}' | awk -F ''"${replicatFilePre}"'' '{print $NF}' | sed 's#0##g'`
+		replicatSeq=`echo $i | awk -F ',' '{print $2}' | awk -F ''"${replicatFilePre}"'' -v mynum=0 '{for(i=0;i<length($NF);i++) if(substr($NF,i,1)!=0) {mynum=i;break}}END{print substr($NF,mynum)}'`
 		#获取当前存在的源端投递过来的trail文件
 		
 		#判断是否为第一次，如果为第一次表示数组内没有存放任何replicat进程信息。需要给数组内赋值
