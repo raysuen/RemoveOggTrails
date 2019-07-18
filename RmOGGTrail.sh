@@ -2,6 +2,9 @@
 #by raysuen
 #v02
 
+if [ -f ~/.bash_profile ];then
+	source ~/.bash_profile
+fi
 
 ComGgsci=/u01/ggs/ggsci         #指定ggsci的绝对路径
 ExtractTrailDir=/u01/ggs/dirdat        #指定trail文件的目录
